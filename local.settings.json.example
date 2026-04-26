@@ -1,6 +1,17 @@
 {
   "IsEncrypted": false,
   "Values": {
+    // LOCAL DEVELOPMENT: use Azurite emulator
+    // "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+
+    // AZURE (Option A - Connection String): replace with real storage account connection string
+    // "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=<storage-account-name>;AccountKey=<storage-account-key>;EndpointSuffix=core.windows.net",
+
+    // AZURE (Option B - Managed Identity): set accountName only; assign Storage Blob Data Owner +
+    // Storage Queue Data Contributor + Storage Table Data Contributor roles to the Function App identity
+    // "AzureWebJobsStorage__accountName": "<storage-account-name>",
+    // "AzureWebJobsStorage__credential": "managedidentity",
+
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "node",
     "TIMER_SCHEDULE": "0 */15 * * * *",

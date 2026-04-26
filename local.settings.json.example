@@ -1,0 +1,18 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "TIMER_SCHEDULE": "0 */15 * * * *",
+    "GRAPH_TENANT_ID": "<tenant-id>",
+    "GRAPH_CLIENT_ID": "<app-registration-client-id-for-local-dev>",
+    "GRAPH_CLIENT_SECRET": "<client-secret-for-local-dev>",
+    "TARGET_SERVICE_PRINCIPAL_ID": "5f69caa7-a3dd-4cf8-a012-fdf7adbe2ffa",
+    "TARGET_APPLICATION_ID": "83095ab3-0f7a-4873-a520-66b000e6ca43",
+    "TARGET_ENTERPRISE_APP_NAME": "GitHub EMU - octodemo-copilot-standalone",
+    "TARGET_APP_ROLE_VALUE": "ObjectIfDuplicate",
+    "TARGET_APP_ROLE_DISPLAY_NAME": "Users-Duplicate",
+    "DRY_RUN": "true",
+    "MAX_GRAPH_RETRIES": "4"
+  }
+}

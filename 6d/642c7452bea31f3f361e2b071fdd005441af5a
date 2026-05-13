@@ -1,0 +1,37 @@
+src/config.js
+  s_db529f8b58b22c::t_d29d3a592e559f 31,40
+docs/architecture.md
+  s_db529f8b58b22c::t_44e017628743e7 1-145
+src/roleSyncTimer.js
+  s_db529f8b58b22c::t_d29d3a592e559f 43-50,96,98,100-112,153-155,191-198,211,215-217,225-226,230,239
+local.settings.json.example
+  s_db529f8b58b22c::t_d29d3a592e559f 17
+package.json
+  s_db529f8b58b22c::t_d29d3a592e559f 9
+src/app.js
+  s_db529f8b58b22c::t_d29d3a592e559f 1-2
+src/syncDashboard.js
+  s_db529f8b58b22c::t_d29d3a592e559f 1-265,267-298
+  s_db529f8b58b22c::t_bc6a1b9941d22c 266
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "6d642c7452bea31f3f361e2b071fdd005441af5a",
+  "prompts": {},
+  "humans": {
+    "h_5257263ddcda8f": {
+      "author": "Somnath Banerjee"
+    }
+  },
+  "sessions": {
+    "s_db529f8b58b22c": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "baff9f0f-fae7-4ead-8aec-38bac6d29042",
+        "model": "unknown"
+      },
+      "human_author": "Somnath Banerjee <sombaner@github.com>"
+    }
+  }
+}

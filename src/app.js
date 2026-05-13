@@ -1,1 +1,2 @@
 require("./roleSyncTimer");
+require("./syncDashboard");

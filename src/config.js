@@ -28,7 +28,7 @@ function optionalBool(name, fallback) {
 
 function getConfig() {
   return {
-    timerSchedule: process.env.TIMER_SCHEDULE || "0 */15 * * * *",
+    timerSchedule: process.env.TIMER_SCHEDULE || "0 30 3 * * *",
     tenantId: process.env.GRAPH_TENANT_ID || undefined,
     clientId: process.env.GRAPH_CLIENT_ID || undefined,
     clientSecret: process.env.GRAPH_CLIENT_SECRET || undefined,
@@ -37,7 +37,7 @@ function getConfig() {
     targetEnterpriseAppName: requiredSetting("TARGET_ENTERPRISE_APP_NAME"),
     targetAppRoleValue: requiredSetting("TARGET_APP_ROLE_VALUE"),
     targetAppRoleDisplayName: requiredSetting("TARGET_APP_ROLE_DISPLAY_NAME"),
-    dryRun: optionalBool("DRY_RUN", true),
+    dryRun: optionalBool("DRY_RUN", false),
     maxGraphRetries: optionalInt("MAX_GRAPH_RETRIES", 4)
   };
 }

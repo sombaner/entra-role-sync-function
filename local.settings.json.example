@@ -14,7 +14,7 @@
 
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "node",
-    "TIMER_SCHEDULE": "0 */15 * * * *",
+    "TIMER_SCHEDULE": "0 30 3 * * *",
     "GRAPH_TENANT_ID": "<tenant-id>",
     "GRAPH_CLIENT_ID": "<app-registration-client-id-for-local-dev>",
     "GRAPH_CLIENT_SECRET": "<client-secret-for-local-dev>",
@@ -23,7 +23,6 @@
     "TARGET_ENTERPRISE_APP_NAME": "GitHub EMU - octodemo-copilot-standalone",
     "TARGET_APP_ROLE_VALUE": "ObjectIfDuplicate",
     "TARGET_APP_ROLE_DISPLAY_NAME": "Users-Duplicate",
-    "DRY_RUN": "true",
     "MAX_GRAPH_RETRIES": "4"
   }
 }

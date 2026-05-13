@@ -40,6 +40,14 @@ function getCurrentExtensionAttribute2(user) {
   return user.onPremisesExtensionAttributes?.extensionAttribute2 || "";
 }
 
+function resolveRunConfig(overrides = {}) {
+  return {
+    ...getConfig(),
+    ...overrides,
+    dryRun: overrides.dryRun !== undefined ? overrides.dryRun : getConfig().dryRun
+  };
+}
+
 async function loadScopedUsers(client, config, logger, targetRoleId) {
   const assignments = await getAppAssignments(client, config.targetServicePrincipalId, config.maxGraphRetries, logger);
   const allUserIds = new Set();
@@ -85,10 +93,23 @@ async function loadScopedUsers(client, config, logger, targetRoleId) {
   };
 }
 
-async function syncUsers(context) {
+async function syncUsers(context, overrides = {}) {
   const logger = context;
-  const config = getConfig();
+  const config = resolveRunConfig(overrides);
   const client = createGraphClient(config);
+  const result = {
+    enterpriseAppName: config.targetEnterpriseAppName,
+    applicationId: config.targetApplicationId,
+    servicePrincipalId: config.targetServicePrincipalId,
+    targetAppRoleValue: config.targetAppRoleValue,
+    targetAppRoleDisplayName: config.targetAppRoleDisplayName,
+    dryRun: config.dryRun,
+    scopedUserCount: 0,
+    targetRoleUserCount: 0,
+    updatedCount: 0,
+    skippedCount: 0,
+    impactedUsers: []
+  };
 
   logger.log("Starting role sync", {
     enterpriseAppName: config.targetEnterpriseAppName,
@@ -129,6 +150,9 @@ async function syncUsers(context) {
   }
 
   const { allUserIds, targetRoleUserIds } = await loadScopedUsers(client, config, logger, targetRoleId);
+  result.scopedUserCount = allUserIds.length;
+  result.targetRoleUserCount = targetRoleUserIds.size;
+
   logger.log("Resolved app assignments", {
     scopedUserCount: allUserIds.length,
     targetRoleUserCount: targetRoleUserIds.size
@@ -164,6 +188,14 @@ async function syncUsers(context) {
       continue;
     }
 
+    const impactedUser = {
+      userId: user.id,
+      userPrincipalName: user.userPrincipalName,
+      currentExtensionAttribute2: currentValue,
+      newExtensionAttribute2: desiredValue,
+      action: config.dryRun ? "wouldUpdate" : "updated"
+    };
+
     logger.log("Updating user extensionAttribute2", {
       userId: user.id,
       userPrincipalName: user.userPrincipalName,
@@ -176,8 +208,12 @@ async function syncUsers(context) {
       await updateExtensionAttribute2(client, user.id, desiredValue, config.maxGraphRetries, logger);
     }
 
+    result.impactedUsers.push(impactedUser);
     updatedCount += 1;
   }
+
+  result.updatedCount = updatedCount;
+  result.skippedCount = skippedCount;
 
   logger.log("Completed role sync", {
     scopedUserCount: allUserIds.length,
@@ -186,10 +222,12 @@ async function syncUsers(context) {
     skippedCount,
     dryRun: config.dryRun
   });
+
+  return result;
 }
 
 app.timer("roleSyncTimer", {
-  schedule: process.env.TIMER_SCHEDULE || "0 */15 * * * *",
+  schedule: process.env.TIMER_SCHEDULE || "0 30 3 * * *",
   runOnStartup: process.env.RUN_ON_STARTUP === "true",
   handler: async (_timer, context) => {
     await syncUsers(context);
@@ -198,5 +236,6 @@ app.timer("roleSyncTimer", {
 
 module.exports = {
   deriveProvisioningUserName,
+  getCurrentExtensionAttribute2,
   syncUsers
 };
